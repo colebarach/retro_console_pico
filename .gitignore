@@ -1,0 +1,5 @@
+.vscode/*
+examples/pico/build/
+*/build/*
+build/*
+examples/pico/standalone_project/build
