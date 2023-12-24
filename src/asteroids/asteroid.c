@@ -19,8 +19,7 @@ void asteroidInitialize(asteroid_t* asteroid)
     asteroid->modelPointCount  = 0;
 
     // Put model in the render stack
-    asteroid->model = xyRendererRenderShape(asteroid->modelBuffer, 0, 0x00, 0x00);
-    asteroid->model->visible = false;
+    asteroid->model = xyRenderShape(asteroid->modelBuffer, 0, 0x00, 0x00, false);
 }
 
 void asteroidActivate(asteroid_t* asteroid, int8_t size, float positionX, float positionY, float velocityX, float velocityY, float rotation, float angularVelocity)

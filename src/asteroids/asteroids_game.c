@@ -4,7 +4,7 @@
 // Libraries ------------------------------------------------------------------------------------------------------------------
 
 // X-Y Library
-#include <xy.h>
+#include <xy_renderer.h>
 
 // Pico Standard Library
 #include <pico/stdlib.h>
@@ -64,7 +64,7 @@ int asteroidsEntrypoint(controller_t* controllers, uint16_t controllerCount)
 
         // Objects ------------------------------------------------------------------------------------------------------------
 
-        shipInitialize(&ship, xyWidth() / 2.0f - SHIP_CENTER_OF_MASS_X, xyHeight() / 2.0f - SHIP_CENTER_OF_MASS_Y);
+        shipInitialize(&ship, xyScreenWidth() / 2.0f - SHIP_CENTER_OF_MASS_X, xyScreenHeight() / 2.0f - SHIP_CENTER_OF_MASS_Y);
         scoreInitialize(&score, 0x00, 0xEC);
         lifeInitialize(&lives,  0x9F, 0xEC);
         bulletBufferInitialize(bullets, SIZE_BULLET_BUFFER);
@@ -73,7 +73,7 @@ int asteroidsEntrypoint(controller_t* controllers, uint16_t controllerCount)
         // Spawn initial asteroids
         for(uint16_t index = 0; index < ASTEROID_SPAWN_COUNT; ++index)
         {
-            asteroidBufferSpawn(asteroids, SIZE_ASTEROID_BUFFER, -1, -1, 0.0f, xyWidth(), 0.0f, xyHeight());
+            asteroidBufferSpawn(asteroids, SIZE_ASTEROID_BUFFER, -1, -1, 0.0f, xyScreenWidth(), 0.0f, xyScreenHeight());
         }
 
         // Event Loop ---------------------------------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ int asteroidsEntrypoint(controller_t* controllers, uint16_t controllerCount)
                 for(uint16_t index = 0; index < ASTEROID_SPAWN_COUNT; ++index)
                 {
                     if(asteroidSpeed < 8) ++asteroidSpeed;
-                    asteroidBufferSpawn(asteroids, SIZE_ASTEROID_BUFFER, -1, asteroidSpeed, 0.0f, xyWidth(), 0.0f, xyHeight());
+                    asteroidBufferSpawn(asteroids, SIZE_ASTEROID_BUFFER, -1, asteroidSpeed, 0.0f, xyScreenWidth(), 0.0f, xyScreenHeight());
                 }
             }
 
@@ -161,6 +161,6 @@ int asteroidsEntrypoint(controller_t* controllers, uint16_t controllerCount)
         }
 
         // Clear the render stack for reset
-        xyRendererClearStack();
+        xyRendererClear();
     }
 }

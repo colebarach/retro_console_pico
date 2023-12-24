@@ -6,6 +6,9 @@
 // Author: Cole Barach
 //
 // Description: Implementation of the videogame 'pong'.
+//
+// To do:
+// - Ball freaks out when paddle moves into it from top / bottom.
 
 // Libraries ------------------------------------------------------------------------------------------------------------------
 

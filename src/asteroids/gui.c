@@ -18,12 +18,12 @@ void binaryToDigits(uint32_t value, uint32_t* digits, uint16_t digitCount, uint1
 
 // Function Definitions -------------------------------------------------------------------------------------------------------
 
-void scoreInitialize(scoreCounter_t* scoreCounter, xyCoord positionX, xyCoord positionY)
+void scoreInitialize(scoreCounter_t* scoreCounter, xyCoord_t positionX, xyCoord_t positionY)
 {
     // Add digits to render stack
     for(uint16_t index = 0; index < SCORE_COUNTER_SIZE; ++index)
     {
-        scoreCounter->digits[index] = xyRendererRenderChar('0', positionX + (SCORE_COUNTER_SIZE - index - 1) * 0x10, positionY);
+        scoreCounter->digits[index] = xyRenderChar('0', positionX + (SCORE_COUNTER_SIZE - index - 1) * 0x10, positionY);
     }
 }
 
@@ -41,16 +41,15 @@ void scoreUpdate(scoreCounter_t* score, uint32_t scoreValue)
     }
 }
 
-void lifeInitialize(lifeCounter_t* lifeCounter, xyCoord positionX, xyCoord positionY)
+void lifeInitialize(lifeCounter_t* lifeCounter, xyCoord_t positionX, xyCoord_t positionY)
 {
     // Add icons to render stack
     for(uint16_t index = 0; index < LIFE_COUNTER_SIZE; ++index)
     {
-        xyCoord iconPositionX = positionX + ((LIFE_COUNTER_SIZE - index - 1) % 6) * 0x10;
-        xyCoord iconPositionY = positionY - (index / 6) * 0x14;
+        xyCoord_t iconPositionX = positionX + ((LIFE_COUNTER_SIZE - index - 1) % 6) * 0x10;
+        xyCoord_t iconPositionY = positionY - (index / 6) * 0x14;
 
-        lifeCounter->lives[index] = xyRendererRenderShape(lifeIconModel, SIZE_LIFE_ICON_MODEL, iconPositionX, iconPositionY);
-        lifeCounter->lives[index]->visible = false;
+        lifeCounter->lives[index] = xyRenderShape(lifeIconModel, SIZE_LIFE_ICON_MODEL, iconPositionX, iconPositionY, false);
     }
 }
 

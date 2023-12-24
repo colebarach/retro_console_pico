@@ -10,7 +10,8 @@
 // Libraries ------------------------------------------------------------------------------------------------------------------
 
 // X-Y Library
-#include <xy.h>
+#include <xy_renderer.h>
+#include <xy_shapes.h>
 
 // Constants ------------------------------------------------------------------------------------------------------------------
 
@@ -48,7 +49,7 @@ typedef volatile struct lifeCounterObject lifeCounter_t;
 // Initialize Score Counter
 // - Call to initialize the score counter and put models in the render stack.
 // - Must be called before the score will be rendered.
-void scoreInitialize(scoreCounter_t* scoreCounter, xyCoord positionX, xyCoord positionY);
+void scoreInitialize(scoreCounter_t* scoreCounter, xyCoord_t positionX, xyCoord_t positionY);
 
 // Update Score Counter
 // - Call to update the value of the score counter.
@@ -60,7 +61,7 @@ void scoreUpdate(scoreCounter_t* scoreCounter, uint32_t scoreValue);
 // Initialize Life Counter
 // - Call to initialize the life counter and put models in the render stack.
 // - Must be called before the lives will be rendered.
-void lifeInitialize(lifeCounter_t* lifeCounter, xyCoord positionX, xyCoord positionY);
+void lifeInitialize(lifeCounter_t* lifeCounter, xyCoord_t positionX, xyCoord_t positionY);
 
 // Update Life Counter
 // - Call to update the value of the life counter.

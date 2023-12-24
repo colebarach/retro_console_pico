@@ -29,8 +29,7 @@ void bulletInitialize(bullet_t* bullet)
     bullet->rotation        = 0.0f;
 
     // Put model in the render stack
-    bullet->model = xyRendererRenderShape(bullet->modelBuffer, 0, 0x00, 0x00);
-    bullet->model->visible = false;
+    bullet->model = xyRenderShape(bullet->modelBuffer, 0, 0x00, 0x00, false);
 }
 
 void bulletSpawn(bullet_t* bullet, float positionX, float positionY, float rotation, float velocity)

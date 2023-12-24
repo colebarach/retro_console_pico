@@ -10,7 +10,7 @@
 // Libraries ------------------------------------------------------------------------------------------------------------------
 
 // X-Y Library
-#include <xy.h>
+#include <xy_renderer.h>
 
 // Game Rules -----------------------------------------------------------------------------------------------------------------
 
@@ -39,11 +39,11 @@
 
 // Model to render when not moving
 #define SIZE_SHIP_MODEL_IDLE 17
-extern struct xyPoint shipModelIdle[SIZE_SHIP_MODEL_IDLE];
+extern xyPoint_t shipModelIdle[SIZE_SHIP_MODEL_IDLE];
 
 // Model to render when moving forward
 #define SIZE_SHIP_MODEL_ACCELERATING 25
-extern struct xyPoint shipModelAccelerating[SIZE_SHIP_MODEL_ACCELERATING];
+extern xyPoint_t shipModelAccelerating[SIZE_SHIP_MODEL_ACCELERATING];
 
 // Objects --------------------------------------------------------------------------------------------------------------------
 

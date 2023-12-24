@@ -4,7 +4,8 @@
 // Libraries ------------------------------------------------------------------------------------------------------------------
 
 // X-Y Library
-#include <xy.h>
+#include <xy_renderer.h>
+#include <xy_shapes.h>
 
 // Pico Standard Library
 #include <pico/stdlib.h>
@@ -105,8 +106,8 @@ int pongEntrypoint(controller_t* controllers, uint16_t controllerCount)
     // Object Properties ------------------------------------------------------------------------------------------------------
 
     // Ball
-    float ballPositionX = xyWidth()  / 2.0f - BALL_SIZE * 0.5f;           // X position of the bottom left corner of the ball
-    float ballPositionY = xyHeight() / 2.0f - BALL_SIZE * 0.5f;           // Y position of the bottom left corner of the ball
+    float ballPositionX = xyScreenWidth()  / 2.0f - BALL_SIZE * 0.5f;           // X position of the bottom left corner of the ball
+    float ballPositionY = xyScreenHeight() / 2.0f - BALL_SIZE * 0.5f;           // Y position of the bottom left corner of the ball
 
     float ballVelocityX = BALL_START_VELOCITY_X;               // Current x velocity of the ball
     float ballVelocityY = BALL_START_VELOCITY_Y;               // Current y velocity of the ball
@@ -119,31 +120,31 @@ int pongEntrypoint(controller_t* controllers, uint16_t controllerCount)
     // Object Rendering -------------------------------------------------------------------------------------------------------
     // - Models are rendered in this order to minimize traces between them
 
-    volatile struct xyShape* paddle0 = xyRendererRenderShape(paddleModel, SIZE_PADDLE_MODEL, 0x08, xyHeight() / 2.0f - PADDLE_HEIGHT / 2.0f);
+    volatile xyShape_t* paddle0 = xyRenderShape(paddleModel, SIZE_PADDLE_MODEL, 0x08, xyScreenHeight() / 2.0f - PADDLE_HEIGHT / 2.0f, true);
 
-    xyRendererRenderShape(screenPart1, SIZE_SCREEN_PART_1, 0x00, 0x00);
+    xyRenderShape(screenPart1, SIZE_SCREEN_PART_1, 0x00, 0x00, true);
 
-    xyRendererRenderShape(scoreUnderline, SIZE_SCORE_UNDERLINE, 0x30, 0xDE);
+    xyRenderShape(scoreUnderline, SIZE_SCORE_UNDERLINE, 0x30, 0xDE, true);
     
-    volatile struct xyShape* score01 = xyRendererRenderShape(xyShape16x16Ascii['0'], xyShapeSize16x16Ascii['0'], 0x32, 0xE0);
-    volatile struct xyShape* score00 = xyRendererRenderShape(xyShape16x16Ascii['0'], xyShapeSize16x16Ascii['0'], 0x42, 0xE0);
+    volatile xyShape_t* score01 = xyRenderShape(xyShape16x16Ascii['0'], xyShapeSize16x16Ascii['0'], 0x32, 0xE0, true);
+    volatile xyShape_t* score00 = xyRenderShape(xyShape16x16Ascii['0'], xyShapeSize16x16Ascii['0'], 0x42, 0xE0, true);
     
-    xyRendererRenderShape(screenPart2, SIZE_SCREEN_PART_2, 0x00, 0x00);
+    xyRenderShape(screenPart2, SIZE_SCREEN_PART_2, 0x00, 0x00, true);
     
-    volatile struct xyShape* ball = xyRendererRenderShape(ballModel, SIZE_BALL_MODEL, ballPositionX, ballPositionY);
+    volatile xyShape_t* ball = xyRenderShape(ballModel, SIZE_BALL_MODEL, ballPositionX, ballPositionY, true);
     
-    xyRendererRenderShape(screenPart3, SIZE_SCREEN_PART_3, 0x00, 0x00);
+    xyRenderShape(screenPart3, SIZE_SCREEN_PART_3, 0x00, 0x00, true);
     
-    xyRendererRenderShape(scoreUnderline, SIZE_SCORE_UNDERLINE, 0xB0, 0xDE);
+    xyRenderShape(scoreUnderline, SIZE_SCORE_UNDERLINE, 0xB0, 0xDE, true);
 
-    volatile struct xyShape* score11 = xyRendererRenderShape(xyShape16x16Ascii['0'], xyShapeSize16x16Ascii['0'], 0xB2, 0xE0);
-    volatile struct xyShape* score10 = xyRendererRenderShape(xyShape16x16Ascii['0'], xyShapeSize16x16Ascii['0'], 0xC2, 0xE0);
+    volatile xyShape_t* score11 = xyRenderShape(xyShape16x16Ascii['0'], xyShapeSize16x16Ascii['0'], 0xB2, 0xE0, true);
+    volatile xyShape_t* score10 = xyRenderShape(xyShape16x16Ascii['0'], xyShapeSize16x16Ascii['0'], 0xC2, 0xE0, true);
     
-    xyRendererRenderShape(screenPart4, SIZE_SCREEN_PART_4, 0x00, 0x00);
+    xyRenderShape(screenPart4, SIZE_SCREEN_PART_4, 0x00, 0x00, true);
     
-    volatile struct xyShape* paddle1 = xyRendererRenderShape(paddleModel, SIZE_PADDLE_MODEL, xyWidth() - 0x08 - PADDLE_WIDTH, xyHeight() / 2.0f - PADDLE_HEIGHT / 2.0f);
+    volatile xyShape_t* paddle1 = xyRenderShape(paddleModel, SIZE_PADDLE_MODEL, xyScreenWidth() - 0x08 - PADDLE_WIDTH, xyScreenHeight() / 2.0f - PADDLE_HEIGHT / 2.0f, true);
     
-    xyRendererRenderShape(screenPart5, SIZE_SCREEN_PART_5, 0x00, 0x00);
+    xyRenderShape(screenPart5, SIZE_SCREEN_PART_5, 0x00, 0x00, true);
 
     // Event Loop -------------------------------------------------------------------------------------------------------------
 
@@ -160,7 +161,7 @@ int pongEntrypoint(controller_t* controllers, uint16_t controllerCount)
         {
             ballVelocityY = -ballVelocityY;
         }
-        else if(ballPositionY + BALL_SIZE + ballVelocityY >= xyHeight() - 1)
+        else if(ballPositionY + BALL_SIZE + ballVelocityY >= xyScreenHeight() - 1)
         {
             ballVelocityY = -ballVelocityY;
         }
@@ -185,8 +186,8 @@ int pongEntrypoint(controller_t* controllers, uint16_t controllerCount)
             // Paddle 1 win
 
             // Reset ball
-            ballPositionX = xyWidth()  / 2.0f - BALL_SIZE / 2.0f;
-            ballPositionY = xyHeight() / 2.0f - BALL_SIZE / 2.0f;
+            ballPositionX = xyScreenWidth()  / 2.0f - BALL_SIZE / 2.0f;
+            ballPositionY = xyScreenHeight() / 2.0f - BALL_SIZE / 2.0f;
             ball->positionX = roundf(ballPositionX);
             ball->positionY = roundf(ballPositionY);
             ballVelocityX = BALL_START_VELOCITY_X;
@@ -209,8 +210,8 @@ int pongEntrypoint(controller_t* controllers, uint16_t controllerCount)
             // Paddle 0 win
 
             // Reset ball
-            ballPositionX = xyWidth()  / 2.0f - BALL_SIZE / 2.0f;
-            ballPositionY = xyHeight() / 2.0f - BALL_SIZE / 2.0f;
+            ballPositionX = xyScreenWidth()  / 2.0f - BALL_SIZE / 2.0f;
+            ballPositionY = xyScreenHeight() / 2.0f - BALL_SIZE / 2.0f;
             ball->positionX = roundf(ballPositionX);
             ball->positionY = roundf(ballPositionY);
             ballVelocityX = -BALL_START_VELOCITY_X;
@@ -239,7 +240,7 @@ int pongEntrypoint(controller_t* controllers, uint16_t controllerCount)
         // Update paddle 0 position
         if(controllers[0].buttonUp)
         {
-            if((int16_t)paddle0->positionY + PADDLE_HEIGHT + PADDLE_VELOCITY_Y < xyHeight() - 1) paddle0->positionY += PADDLE_VELOCITY_Y;
+            if((int16_t)paddle0->positionY + PADDLE_HEIGHT + PADDLE_VELOCITY_Y < xyScreenHeight() - 1) paddle0->positionY += PADDLE_VELOCITY_Y;
         }
         else if(controllers[0].buttonDown)
         {
@@ -249,7 +250,7 @@ int pongEntrypoint(controller_t* controllers, uint16_t controllerCount)
         // Update paddle 1 position
         if(controllers[1].buttonUp)
         {
-            if((int16_t)paddle1->positionY + PADDLE_HEIGHT + PADDLE_VELOCITY_Y < xyHeight() - 1) paddle1->positionY += PADDLE_VELOCITY_Y;
+            if((int16_t)paddle1->positionY + PADDLE_HEIGHT + PADDLE_VELOCITY_Y < xyScreenHeight() - 1) paddle1->positionY += PADDLE_VELOCITY_Y;
         }
         else if(controllers[1].buttonDown)
         {
